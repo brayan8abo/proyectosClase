@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class euroMillon extends AppCompatActivity {
 
+
+    // definimos variables usadas en xml
     private Button btnSalir;
 
 
@@ -16,8 +18,11 @@ public class euroMillon extends AppCompatActivity {
         setContentView(R.layout.euro_millon);
         setTitle("Euro Millon");
 
+        // buscamos los elementos del xml
         btnSalir = findViewById(R.id.btnSalir);
 
+
+        // Listener del boton salir para fin
         btnSalir.setOnClickListener(view -> {
             finish();
         });
