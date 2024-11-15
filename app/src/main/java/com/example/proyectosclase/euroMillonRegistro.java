@@ -13,8 +13,8 @@ public class euroMillonRegistro extends AppCompatActivity {
     private EditText user;
     private EditText pass;
     private Button btnEntrar;
-    private String[] arrayUser = {"Brayan", "Pablo", "Noel", "Carolina", "Juan Jose", "Alejandra", "Cristian"};
-    private String[] arrayPass = {"12345", "12345", "12345", "12345", "12345", "12345", "12345"};
+    private String[] arrayUser = {"Brayan@gmail.com", "Pablo@gmail.com", "Noel@gmail.com", "Carolina@gmail.com", "Juan Jose@gmail.com", "Alejandra@gmail.com", "Cristian@gmail.com","Ivan@gmail.com"};
+    private String[] arrayPass = {"12345", "11111", "22222", "33333", "44444", "55555", "66666","77777"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
