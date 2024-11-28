@@ -83,7 +83,7 @@ public class SeleccionActivity extends AppCompatActivity {
                     } else if (seleccionados.size() < limite) {
                         // Seleccionar
                         seleccionados.add(numero);
-                        btn.setBackgroundResource(R.mipmap.seleccion); // Fondo seleccionado
+                        btn.setBackgroundResource(R.mipmap.telefono); // Fondo seleccionado
                     } else {
                         Toast.makeText(SeleccionActivity.this, "No puedes seleccionar más de " + limite, Toast.LENGTH_SHORT).show();
                     }
@@ -101,18 +101,6 @@ public class SeleccionActivity extends AppCompatActivity {
             grid.addView(btn);
         }
     }
-
-    // Método para convertir un número a su forma en palabras
-   /* private String convertNumberToWord(int number) {
-        String[] words = {
-                "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez",
-                "once", "doce", "trece", "catorce", "quince", "dieciseis", "diecisiete", "dieciocho", "diecinueve", "veinte",
-                "veintiuno", "veintidos", "veintitres", "veinticuatro", "veinticinco", "veintiseis", "veintisiete", "veintiocho", "veintinueve", "treinta",
-                "treinta_y_uno", "treinta_y_dos", "treinta_y_tres", "treinta_y_cuatro", "treinta_y_cinco", "treinta_y_seis", "treinta_y_siete", "treinta_y_ocho", "treinta_y_nueve", "cuarenta",
-                "cuarenta_y_uno", "cuarenta_y_dos", "cuarenta_y_tres", "cuarenta_y_cuatro", "cuarenta_y_cinco", "cuarenta_y_seis", "cuarenta_y_siete", "cuarenta_y_ocho", "cuarenta_y_nueve", "cincuenta"
-        };
-        return words[number - 1]; // Ajuste para índices basados en 0
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

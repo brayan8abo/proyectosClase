@@ -51,7 +51,7 @@ public class euroMillonRegistro extends AppCompatActivity {
                     }
                 }
                 if (isUser == true) {
-                    setContentView(R.layout.euro_millon);
+                    setContentView(R.layout.activity_seleccion);
                 } else {
                     //Toast para mostrar el mensaje de usuario o contraseña incorrecta
                     Toast.makeText(euroMillonRegistro.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
