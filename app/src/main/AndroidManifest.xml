@@ -77,10 +77,10 @@
             android:name=".numerosAleatorios"
             android:exported="true">
 
-            <!--                        <intent-filter>-->
-            <!--                            <action android:name="android.intent.action.MAIN" />-->
-            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--                        </intent-filter>-->
+<!--                                    <intent-filter>-->
+<!--                                        <action android:name="android.intent.action.MAIN" />-->
+<!--                                        <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                                    </intent-filter>-->
         </activity>
         <activity
             android:name=".euroMillon"
@@ -95,11 +95,30 @@
             android:name=".euroMillonRegistro"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
+        <activity
+            android:name=".SeleccionActivity"
+            android:exported="true">
+
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+        </activity>
+        <activity
+            android:name=".ResultadoActivity"
+            android:exported="true">
+
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
+
 
 
     </application>
