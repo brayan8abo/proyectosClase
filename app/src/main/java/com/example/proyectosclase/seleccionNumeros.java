@@ -1,6 +1,7 @@
 package com.example.proyectosclase;
 
-import android.annotation.SuppressLint;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class SeleccionActivity extends AppCompatActivity {
+public class seleccionNumeros extends AppCompatActivity {
+
+    private GridLayout gridNumeros, gridEstrellas;
 
     private ArrayList<Integer> numerosSeleccionados = new ArrayList<>();
     private ArrayList<Integer> estrellasSeleccionadas = new ArrayList<>();
@@ -42,55 +47,51 @@ public class SeleccionActivity extends AppCompatActivity {
             ImageButton btn = new ImageButton(this);
 
             // Generar el nombre del recurso basado en si es una estrella o un número
-            String resourceName;
+            String nombreTipo = isStar ? "estrella" : "numero";
             if (isStar) {
                 // Para estrellas, usamos el array 'estrellas'
                 if (i <= 12) { // Aseguramos que no exceda el rango de estrellas disponibles
-                    resourceName = estrellas[i - 1]; // "estrella_uno", "estrella_dos", ..., "estrella_doce"
+                    nombreTipo = estrellas[i - 1]; // "estrella_uno", "estrella_dos", ..., "estrella_doce"
                 } else {
                     continue; // Si el índice está fuera de rango, lo omitimos
                 }
             } else {
                 // Para números, usamos el array 'numeros'
                 if (i <= 50) { // Aseguramos que no exceda el rango de números disponibles
-                    resourceName = numeros[i - 1]; // "uno", "dos", ..., "cincuenta"
+                    nombreTipo = numeros[i - 1]; // "uno", "dos", ..., "cincuenta"
                 } else {
                     continue; // Si el índice está fuera de rango, lo omitimos
                 }
             }
 
             // Obtener el ID del recurso usando el nombre generado
-            int imageResId = getResources().getIdentifier(resourceName, "mipmap", getPackageName());
+            int idImagenes = getResources().getIdentifier(nombreTipo, "drawable", getPackageName());
 
-            if (imageResId == 0) {
-                System.out.println("Error: Imagen no encontrada para " + resourceName);
+            if (idImagenes == 0) {
+                System.out.println("Error: Imagen no encontrada para " + nombreTipo);
                 continue; // Salta esta iteración si no se encuentra el recurso
             }
 
             // Configurar la imagen y el tag del botón
-            btn.setImageResource(imageResId);
+            btn.setImageResource(idImagenes);
             btn.setTag(i);
 
-            // Configurar evento de clic
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int numero = (int) v.getTag();
                     if (seleccionados.contains(numero)) {
-                        // Deseleccionar
                         seleccionados.remove(Integer.valueOf(numero));
                         btn.setBackgroundResource(0); // Quitar fondo
                     } else if (seleccionados.size() < limite) {
-                        // Seleccionar
                         seleccionados.add(numero);
-                        btn.setBackgroundResource(R.mipmap.telefono); // Fondo seleccionado
+                        btn.setBackgroundResource(R.drawable.seleccionar);
                     } else {
-                        Toast.makeText(SeleccionActivity.this, "No puedes seleccionar más de " + limite, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(seleccionNumeros.this, "No puedes seleccionar más de " + limite, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
-            // Ajustar estilo y añadir el botón al GridLayout
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.width = 250; // Ancho
             params.height = 160; // Alto
@@ -107,8 +108,8 @@ public class SeleccionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccion);
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) GridLayout gridNumeros = findViewById(R.id.gridNumeros);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) GridLayout gridEstrellas = findViewById(R.id.gridEstrellas);
+        GridLayout gridNumeros = findViewById(R.id.gridNumeros);
+        GridLayout gridEstrellas = findViewById(R.id.gridEstrellas);
 
         // Configurar los grids
         // Configurar los grids
@@ -116,17 +117,17 @@ public class SeleccionActivity extends AppCompatActivity {
         configurarGrid(gridEstrellas, 12, estrellasSeleccionadas, 2, "estrella_", true);
 
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button btnConfirmar = findViewById(R.id.btnConfirmar);
+        Button btnConfirmar = findViewById(R.id.btnConfirmar);
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (numerosSeleccionados.size() == 5 && estrellasSeleccionadas.size() == 2) {
-                    Intent intent = new Intent(SeleccionActivity.this, ResultadoActivity.class);
+                    Intent intent = new Intent(seleccionNumeros.this, resultadosEuroMillones.class);
                     intent.putIntegerArrayListExtra("numerosSeleccionados", numerosSeleccionados);
                     intent.putIntegerArrayListExtra("estrellasSeleccionadas", estrellasSeleccionadas);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(SeleccionActivity.this, "Selecciona 5 números y 2 estrellas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(seleccionNumeros.this, "Selecciona 5 números y 2 estrellas", Toast.LENGTH_SHORT).show();
                 }
             }
         });

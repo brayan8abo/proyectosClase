@@ -77,20 +77,20 @@
             android:name=".numerosAleatorios"
             android:exported="true">
 
-<!--                                    <intent-filter>-->
-<!--                                        <action android:name="android.intent.action.MAIN" />-->
-<!--                                        <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                                    </intent-filter>-->
+            <!--                                    <intent-filter>-->
+            <!--                                        <action android:name="android.intent.action.MAIN" />-->
+            <!--                                        <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                                    </intent-filter>-->
         </activity>
-<!--        <activity-->
-<!--            android:name=".euroMillon"-->
-<!--            android:exported="true">-->
+        <!--        <activity-->
+        <!--            android:name=".euroMillon"-->
+        <!--            android:exported="true">-->
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity
             android:name=".euroMillonRegistro"
             android:exported="true">
@@ -101,23 +101,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SeleccionActivity"
+            android:name=".seleccionNumeros"
             android:exported="true">
 
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+            <!--                        <intent-filter>-->
+            <!--                            <action android:name="android.intent.action.MAIN" />-->
+            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                        </intent-filter>-->
         </activity>
         <activity
-            android:name=".ResultadoActivity"
+            android:name=".resultadosEuroMillones"
             android:exported="true">
 
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!--                        <intent-filter>-->
+            <!--                            <action android:name="android.intent.action.MAIN" />-->
+            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                        </intent-filter>-->
         </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
 
 
 

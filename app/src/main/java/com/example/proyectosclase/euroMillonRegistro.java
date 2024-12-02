@@ -1,5 +1,6 @@
 package com.example.proyectosclase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,13 +46,27 @@ public class euroMillonRegistro extends AppCompatActivity {
                 // pero enviando un comando de iniciar euroMillon con los numeros y estrellas
                 boolean isUser = false;
                 for (int i = 0; i < arrayUser.length; i++) {
+                    //acaba debemos tener en cuenta los usuarios guardados
+                    /*
+                     *   todo: "Brayan@gmail.com", "Pablo@gmail.com", "Noel@gmail.com",
+                     *    "Carolina@gmail.com", "JuanJose@gmail.com",
+                     *    "Alejandra@gmail.com", "Cristian@gmail.com", "Ivan@gmail.com"};
+                     *
+                     * todo: y las contraseñas correspondientes "12345", "11111", "22222", "33333",
+                     *  "44444", "55555", "66666", "77777"
+                     * */
+
+
                     if (arrayUser[i].equals(usuario) && arrayPass[i].equals(password)) {
                         isUser = true;
                         break;
                     }
                 }
                 if (isUser == true) {
-                    setContentView(R.layout.activity_seleccion);
+                    //Enviamos el comando de iniciar la seleccion de numeros
+                    Intent seleccion = new Intent(euroMillonRegistro.this, seleccionNumeros.class);
+                    startActivity(seleccion);
+                    finish();
                 } else {
                     //Toast para mostrar el mensaje de usuario o contraseña incorrecta
                     Toast.makeText(euroMillonRegistro.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
