@@ -17,23 +17,8 @@
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001"
+        app:layout_constraintVertical_bias="0.137"
         app:srcCompat="@drawable/euroillon_logo" />
-
-    <EditText
-        android:id="@+id/user"
-        android:layout_width="262dp"
-        android:layout_height="51dp"
-        android:ems="10"
-        android:hint="Ingresa tu correo"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogin"
-        app:layout_constraintVertical_bias="0.101" />
 
     <EditText
         android:id="@+id/pass"
@@ -45,10 +30,26 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user"
-        app:layout_constraintVertical_bias="0.091"
+        app:layout_constraintVertical_bias="0.109"
         tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="262dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:hint="Ingresa tu correo"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogin"
+        app:layout_constraintVertical_bias="0.119" />
 
     <Button
         android:id="@+id/btnEntrar"
@@ -62,6 +63,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintVertical_bias="0.203" />
+        app:layout_constraintVertical_bias="0.453" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

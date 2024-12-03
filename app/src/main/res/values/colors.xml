@@ -5,4 +5,6 @@
     <color name="btns">#FF006400</color>
     <color name="rojo">#EE1D00</color>
     <color name="btnEuroMillon">#073F67</color>
+    <color name="ganaciaPositiva">#043F63</color>
+    <color name="ganaciaNegativa">#FF0000</color>
 </resources>

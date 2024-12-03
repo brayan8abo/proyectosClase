@@ -7,14 +7,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class resultadosEuroMillones extends AppCompatActivity {
 
     private Button btnSalir;
-    private TextView seleccionNumStar, numStarsWin;
+    private TextView seleccionNumStar, numStarsWin, numJuegos;
 
 
     @SuppressLint("MissingInflatedId")
@@ -24,6 +26,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         setContentView(R.layout.activity_resultado);
         btnSalir = findViewById(R.id.btnSalir);
         numStarsWin = findViewById(R.id.numStarsWin);
+        numJuegos = findViewById(R.id.numJuegos);
 
         //recogemos los numeros y estrellas seleccionados
         ArrayList<Integer> numerosSeleccionados = getIntent().getIntegerArrayListExtra("numerosSeleccionados");
@@ -32,13 +35,13 @@ public class resultadosEuroMillones extends AppCompatActivity {
 
         //mostramos los numeros y estrellas seleccionados
         seleccionNumStar = findViewById(R.id.seleccionNumStar);
-        String numStarSelected = "Has elegio los números: " + numerosSeleccionados.toString() + "\nHas elegito las estrellas: " + estrellasSeleccionadas.toString();
+        String numStarSelected = "Has elegio los números: " + numerosSeleccionados.toString() + "\n\nHas elegito las estrellas: " + estrellasSeleccionadas.toString();
         seleccionNumStar.setText(numStarSelected);
 
         //generamos los numeros y estrellas aleatorias
         ArrayList<Integer> numerosGanadores = generacionNum();
         ArrayList<Integer> estrellasGanadoras = generacionEstrellas();
-        numStarsWin.setText("Los numeros ganadores son: " + numerosGanadores.toString() + "\nLas estrellas ganadoras son: " + estrellasGanadoras.toString());
+        numStarsWin.setText("Los numeros ganadores son: " + numerosGanadores.toString() + "\n\nLas estrellas ganadoras son: " + estrellasGanadoras.toString());
 
         int aciertosNumeros = contarAciertos(numerosSeleccionados, numerosGanadores);
         int aciertosEstrellas = contarAciertos(estrellasSeleccionadas, estrellasGanadoras);
@@ -46,9 +49,24 @@ public class resultadosEuroMillones extends AppCompatActivity {
         aciertos.setText("Has acertado " + aciertosNumeros + " numeros y " + aciertosEstrellas + " estrellas");
 
 
-        int ganacias = calcularGanancias(contarAciertos(numerosSeleccionados, numerosGanadores), contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
+        int ganacias = calcularGanancias(contarAciertos(numerosSeleccionados, numerosGanadores),
+                contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
         TextView ganancias = findViewById(R.id.ganancias);
-        ganancias.setText("Has ganado: " + ganacias + " €, Enhorabuena!");
+
+        if (ganacias > 0) {
+            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaPositiva)); // Verde
+            ganancias.setText("Has ganado: " + ganacias + "€, Enhorabuena!");
+        } else {
+            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaNegativa)); // Rojo
+            ganancias.setText("Hoy no hemos tenido suerte");
+        }
+
+
+
+        contadorVecesJugadas ContadorVecesJugadas = null;
+        int numeroJugadas = ContadorVecesJugadas.recuperarJuegos(this);
+        ContadorVecesJugadas.incrementarJuegos(this);
+        numJuegos.setText("Has jugado: " + numeroJugadas + " veces");
 
 
         //listener del boton salir para finalizar la app

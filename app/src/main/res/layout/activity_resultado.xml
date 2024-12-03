@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Imagen -->
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ficha"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="456dp"
@@ -30,21 +28,32 @@
         android:src="@drawable/resultados"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="-15dp"
-        tools:ignore="MissingConstraints" />
-
-    <!-- Texto de resultado -->
-
-    <!-- Botón Salir -->
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-15dp" />
 
     <TextView
         android:id="@+id/seleccionNumStar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="407dp"
         android:fontFamily="@font/armata"
-        android:lineSpacingExtra="12sp"
-        android:text="Números seleccionados: \nEstrellas seleccionadas:"
+        android:textAlignment="viewStart"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:typeface="sans"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagenResultado" />
+
+    <TextView
+        android:id="@+id/numStarsWin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:fontFamily="@font/armata"
         android:textAlignment="viewStart"
         android:textColor="#000"
         android:textSize="16sp"
@@ -55,36 +64,16 @@
         app:layout_constraintTop_toBottomOf="@id/imagenResultado" />
 
     <TextView
-        android:id="@+id/numStarsWin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:fontFamily="@font/armata"
-        android:lineSpacingExtra="12sp"
-        android:text="Números ganadores: \n Estrellas ganadoras:"
-        android:textAlignment="viewStart"
-        android:textColor="#000"
-        android:textSize="16sp"
-        android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenResultado" />
-
-    <TextView
         android:id="@+id/ganancias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="268dp"
+        android:layout_marginTop="272dp"
         android:fontFamily="@font/armata"
-        android:lineSpacingExtra="12sp"
-        android:text="Tus ganancias son:"
-        android:textAlignment="viewStart"
-        android:textColor="#000"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textSize="24sp"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imagenResultado" />
 
@@ -108,12 +97,27 @@
         android:id="@+id/btnSalir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SALIR"
         android:backgroundTint="@color/btnEuroMillon"
+        android:text="SALIR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/numJuegos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/armata"
+        android:textAlignment="viewStart"
+        android:textColor="#020202"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
