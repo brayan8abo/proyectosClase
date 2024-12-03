@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,7 +17,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
 
 
     //declaramos las variables usadas en el xml
-    private Button btnSalir;
+    private Button btnSalir, btnReset;
     private TextView seleccionNumStar, numStarsWin, numJuegos, aciertos;
 
 
@@ -30,6 +31,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         numJuegos = findViewById(R.id.numJuegos);
         seleccionNumStar = findViewById(R.id.seleccionNumStar);
         aciertos = findViewById(R.id.aciertos);
+        btnReset = findViewById(R.id.btnReset);
 
         //recogemos los numeros y estrellas seleccionados que la pasamos de la actividad anterior
         ArrayList<Integer> numerosSeleccionados = getIntent().getIntegerArrayListExtra("numerosSeleccionados");
@@ -50,34 +52,50 @@ public class resultadosEuroMillones extends AppCompatActivity {
         int aciertosNumeros = contarAciertos(numerosSeleccionados, numerosGanadores);
         int aciertosEstrellas = contarAciertos(estrellasSeleccionadas, estrellasGanadoras);
 
+
         //le pasamos a un textView lo que hemos sacado, en aciertos
         aciertos.setText("Has acertado " + aciertosNumeros + " numeros y " + aciertosEstrellas + " estrellas");
 
 
         //hacemos uno del metodo calcular ganancia
-        int ganacias = calcularGanancias(contarAciertos(numerosSeleccionados, numerosGanadores), contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
+        int ganacias = calcularPorcentajeGanancia(contarAciertos(numerosSeleccionados, numerosGanadores), contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
         TextView ganancias = findViewById(R.id.ganancias);
 
-        if (ganacias > 0) {
-            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaPositiva)); // Verde
-            ganancias.setText("Has ganado: " + ganacias + "€, Enhorabuena!");
-        } else {
-            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaNegativa)); // Rojo
-            ganancias.setText("Hoy no hemos tenido suerte");
-        }
 
-
+        //contar las veces de juego
         contadorVecesJugadas ContadorVecesJugadas = null;
         int numeroJugadas = ContadorVecesJugadas.recuperarJuegos(this);
         ContadorVecesJugadas.incrementarJuegos(this);
         numJuegos.setText("Has jugado: " + numeroJugadas + " veces");
+
+        int porcentajeGanancias = contarAciertos(numerosSeleccionados, numerosGanadores);
+        long premioDelBote = bote(porcentajeGanancias);
+
+        if (porcentajeGanancias > 0) {
+            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaPositiva));
+            ganancias.setText("Has ganado: " + String.valueOf(premioDelBote) + "€, Enhorabuena!");
+        } else {
+            ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaNegativa));
+            ganancias.setText("Hoy no hemos tenido suerte");
+        }
 
 
         //listener del boton salir para finalizar la app
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finishAffinity();
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contadorVecesJugadas.resetearJuegos(resultadosEuroMillones.this);
+
+                numJuegos.setText("Has jugado: 0 veces");
+
+                Toast.makeText(resultadosEuroMillones.this, "Has reiniciado el juego", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,42 +135,77 @@ public class resultadosEuroMillones extends AppCompatActivity {
     }
 
 
-
-    public static int calcularGanancias(int numerosAcertados, int estrellasAcertadas) {
-        if (numerosAcertados == 5 && estrellasAcertadas == 2) return 100;
-        if (numerosAcertados == 5 && estrellasAcertadas == 1) return 95;
-        if (numerosAcertados == 5 && estrellasAcertadas == 0) return 80;
-        if (numerosAcertados == 4 && estrellasAcertadas == 2) return 75;
-        if (numerosAcertados == 4 && estrellasAcertadas == 1) return 60;
-        if (numerosAcertados == 3 && estrellasAcertadas == 2) return 50;
-        if (numerosAcertados == 4 && estrellasAcertadas == 0) return 40;
-        if (numerosAcertados == 2 && estrellasAcertadas == 2) return 30;
-        if (numerosAcertados == 3 && estrellasAcertadas == 1) return 20;
-        if (numerosAcertados == 3 && estrellasAcertadas == 0) return 10;
-        if (numerosAcertados == 1 && estrellasAcertadas == 2) return 5;
-        if (numerosAcertados == 2 && estrellasAcertadas == 1) return 3;
-        return 0;
-    }
-    public static int bote(int porcentaje){
-        int bote = 1500000;
-        return (int) (bote * (porcentaje / 100.0));
-    }
-    public static void mostrarBote(TextView textoBote, int aciertosNumeros, int aciertosEstrellas) {
-        // Llamada a calcularPorcentajeBote para obtener el porcentaje según los aciertos
-        int porcentaje = bote(TextView textoBote, TextView aciertosNumeros, aciertosEstrellas);
-
-        // Calcular el valor del bote
-        int bote = bote(porcentaje);
-
-        // Mostrar el resultado en el TextView
-        if (porcentaje > 0) {
-            textoBote.setText("¡Has ganado " + bote + "€ en el Bote!");
-        } else {
-            textoBote.setText("No has ganado el Bote esta vez.");
+    public static int calcularPorcentajeGanancia(int aciertosNumeros, int aciertosEstrellas) {
+        // Si aciertas los 5 números y las 2 estrellas
+        if (aciertosNumeros == 5 && aciertosEstrellas == 2) {
+            return 100; // 100% si aciertas 5 números y 2 estrellas
         }
+
+        // Si aciertas 5 números y 1 estrella
+        if (aciertosNumeros == 5 && aciertosEstrellas == 1) {
+            return 90; // 90% si aciertas 5 números y 1 estrella
+        }
+
+        // Si aciertas 5 números y 0 estrellas
+        if (aciertosNumeros == 5 && aciertosEstrellas == 0) {
+            return 80; // 80% si aciertas 5 números y 0 estrellas
+        }
+
+        // Si aciertas 4 números y 2 estrellas
+        if (aciertosNumeros == 4 && aciertosEstrellas == 2) {
+            return 75; // 75% si aciertas 4 números y 2 estrellas
+        }
+
+        // Si aciertas 4 números y 1 estrella
+        if (aciertosNumeros == 4 && aciertosEstrellas == 1) {
+            return 60; // 60% si aciertas 4 números y 1 estrella
+        }
+
+        // Si aciertas 3 números y 2 estrellas
+        if (aciertosNumeros == 3 && aciertosEstrellas == 2) {
+            return 50; // 50% si aciertas 3 números y 2 estrellas
+        }
+
+        // Si aciertas 4 números y 0 estrellas
+        if (aciertosNumeros == 4 && aciertosEstrellas == 0) {
+            return 40; // 40% si aciertas 4 números y 0 estrellas
+        }
+
+        // Si aciertas 2 números y 2 estrellas
+        if (aciertosNumeros == 2 && aciertosEstrellas == 2) {
+            return 30; // 30% si aciertas 2 números y 2 estrellas
+        }
+
+        // Si aciertas 3 números y 1 estrella
+        if (aciertosNumeros == 3 && aciertosEstrellas == 1) {
+            return 20; // 20% si aciertas 3 números y 1 estrella
+        }
+
+        // Si aciertas 3 números y 0 estrellas
+        if (aciertosNumeros == 3 && aciertosEstrellas == 0) {
+            return 10; // 10% si aciertas 3 números y 0 estrellas
+        }
+
+        // Si aciertas 1 número y 2 estrellas
+        if (aciertosNumeros == 1 && aciertosEstrellas == 2) {
+            return 5; // 5% si aciertas 1 número y 2 estrellas
+        }
+
+        // Si aciertas 2 números y 1 estrella
+        if (aciertosNumeros == 2 && aciertosEstrellas == 1) {
+            return 3; // 3% si aciertas 2 números y 1 estrella
+        }
+
+        // Si no aciertas ninguna de las combinaciones anteriores
+        return 0; // 0% en cualquier otro caso
     }
 
+    public static long bote(int porcentaje) {
+        long bote = 15000000L;
+        return (long) (15000000 * (100 / 100.0));
+    }
 
 }
+
 
 

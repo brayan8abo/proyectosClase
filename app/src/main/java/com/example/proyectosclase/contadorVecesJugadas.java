@@ -20,4 +20,10 @@ public class contadorVecesJugadas {
         preferencias.edit().putInt(CONTADOR, vecesJugadas).apply();
 
     }
+
+    public static void resetearJuegos(Context context) {
+        SharedPreferences preferencias = context.getSharedPreferences(JUEGO, Context.MODE_PRIVATE);
+        preferencias.edit().putInt(CONTADOR, 0).apply(); // Resetea el contador a 0
+    }
 }
+
