@@ -48,9 +48,9 @@ public class euroMillonRegistro extends AppCompatActivity {
                 for (int i = 0; i < arrayUser.length; i++) {
                     //acaba debemos tener en cuenta los usuarios guardados
                     /*
-                     *   todo: "Brayan@gmail.com", "Pablo@gmail.com", "Noel@gmail.com",
-                     *    "Carolina@gmail.com", "JuanJose@gmail.com",
-                     *    "Alejandra@gmail.com", "Cristian@gmail.com", "Ivan@gmail.com"};
+                     *   todo: "Brayan@gmail.com",1-5 "Pablo@gmail.com", 1-1 "Noel@gmail.com" 2-2,
+                     *    "Carolina@gmail.com" 3-3, "JuanJose@gmail.com" 4-4,
+                     *    "Alejandra@gmail.com"5-5, "Cristian@gmail.com"6-6, "Ivan@gmail.com7-7"};
                      *
                      * todo: y las contraseñas correspondientes "12345", "11111", "22222", "33333",
                      *  "44444", "55555", "66666", "77777"

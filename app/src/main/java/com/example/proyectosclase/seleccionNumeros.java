@@ -2,6 +2,7 @@ package com.example.proyectosclase;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -46,33 +47,32 @@ public class seleccionNumeros extends AppCompatActivity {
         for (int i = 1; i <= max; i++) {
             ImageButton btn = new ImageButton(this);
 
-            // Generar el nombre del recurso basado en si es una estrella o un número
             String nombreTipo = isStar ? "estrella" : "numero";
             if (isStar) {
-                // Para estrellas, usamos el array 'estrellas'
-                if (i <= 12) { // Aseguramos que no exceda el rango de estrellas disponibles
-                    nombreTipo = estrellas[i - 1]; // "estrella_uno", "estrella_dos", ..., "estrella_doce"
+                // para estrellas, usamos el array de estrellas
+                if (i <= 12) {
+                    nombreTipo = estrellas[i - 1];
                 } else {
-                    continue; // Si el índice está fuera de rango, lo omitimos
+                    continue;
                 }
             } else {
-                // Para números, usamos el array 'numeros'
-                if (i <= 50) { // Aseguramos que no exceda el rango de números disponibles
-                    nombreTipo = numeros[i - 1]; // "uno", "dos", ..., "cincuenta"
+                // para números, usamos el array 'numeros'
+                if (i <= 50) {
+                    nombreTipo = numeros[i - 1];
                 } else {
                     continue; // Si el índice está fuera de rango, lo omitimos
                 }
             }
 
             // Obtener el ID del recurso usando el nombre generado
-            int idImagenes = getResources().getIdentifier(nombreTipo, "drawable", getPackageName());
+            @SuppressLint("DiscouragedApi") int idImagenes = getResources().getIdentifier(nombreTipo, "drawable", getPackageName());
 
             if (idImagenes == 0) {
                 System.out.println("Error: Imagen no encontrada para " + nombreTipo);
                 continue; // Salta esta iteración si no se encuentra el recurso
             }
 
-            // Configurar la imagen y el tag del botón
+            // configurar la imagen y el tag del botón
             btn.setImageResource(idImagenes);
             btn.setTag(i);
 
@@ -80,18 +80,24 @@ public class seleccionNumeros extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int numero = (int) v.getTag();
+                    //comprobamos si el boton esta seleccionado, de ser asi, lo quitamos
                     if (seleccionados.contains(numero)) {
                         seleccionados.remove(Integer.valueOf(numero));
-                        btn.setBackgroundResource(0); // Quitar fondo
+                        btn.setBackgroundResource(0);
+
+                        //comprobamos si el array tiene la capacidad llena, y de ser incompleta, procedemos a llenar con la seleccio, y pasamos el DRAWABLE de seleccionar
                     } else if (seleccionados.size() < limite) {
                         seleccionados.add(numero);
                         btn.setBackgroundResource(R.drawable.seleccionar);
                     } else {
+                        //mensaje para notificar que no se pueden elegir mas números
                         Toast.makeText(seleccionNumeros.this, "No puedes seleccionar más de " + limite, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
+
+            //configuracion del grid para que los botones se acoplen directamente en unos espacios
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.width = 250; // Ancho
             params.height = 160; // Alto
@@ -111,8 +117,7 @@ public class seleccionNumeros extends AppCompatActivity {
         GridLayout gridNumeros = findViewById(R.id.gridNumeros);
         GridLayout gridEstrellas = findViewById(R.id.gridEstrellas);
 
-        // Configurar los grids
-        // Configurar los grids
+        //le pasamos al grid, el array numeros, el array estrellas, los numeros y estrellas que a seleccionado, los limites, los (tipos de nombre) y un boolean donde determina si es estrella o numero
         configurarGrid(gridNumeros, 50, numerosSeleccionados, 5, "numero_", false);
         configurarGrid(gridEstrellas, 12, estrellasSeleccionadas, 2, "estrella_", true);
 
@@ -121,12 +126,17 @@ public class seleccionNumeros extends AppCompatActivity {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //comprobamos si los numeros seleccionados y estrellas selecciondas cumplan con los requisitos para hacer el siguiente paso
                 if (numerosSeleccionados.size() == 5 && estrellasSeleccionadas.size() == 2) {
+                    //llamamos intent que es la que se encarga de que cuando haga la comprobacion ejecute el siguiente activity
                     Intent intent = new Intent(seleccionNumeros.this, resultadosEuroMillones.class);
+
+                    //pasamos los arrays para poder tener conocimiento de los datos o informacion ingresada en la otra actividad y poder manejar la informacion
                     intent.putIntegerArrayListExtra("numerosSeleccionados", numerosSeleccionados);
                     intent.putIntegerArrayListExtra("estrellasSeleccionadas", estrellasSeleccionadas);
                     startActivity(intent);
                 } else {
+                    //si llegaras a darle jugar y no tenemos ningun numero ni estrella seleccionada nos saltara el mensaje que debemos seleccionar
                     Toast.makeText(seleccionNumeros.this, "Selecciona 5 números y 2 estrellas", Toast.LENGTH_SHORT).show();
                 }
             }

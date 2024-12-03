@@ -35,13 +35,13 @@ public class resultadosEuroMillones extends AppCompatActivity {
 
         //mostramos los numeros y estrellas seleccionados
         seleccionNumStar = findViewById(R.id.seleccionNumStar);
-        String numStarSelected = "Has elegio los números: " + numerosSeleccionados.toString() + "\n\nHas elegito las estrellas: " + estrellasSeleccionadas.toString();
+        String numStarSelected = "Has elegio los números: " + numerosSeleccionados.toString() + "\nHas elegito las estrellas: " + estrellasSeleccionadas.toString();
         seleccionNumStar.setText(numStarSelected);
 
         //generamos los numeros y estrellas aleatorias
         ArrayList<Integer> numerosGanadores = generacionNum();
         ArrayList<Integer> estrellasGanadoras = generacionEstrellas();
-        numStarsWin.setText("Los numeros ganadores son: " + numerosGanadores.toString() + "\n\nLas estrellas ganadoras son: " + estrellasGanadoras.toString());
+        numStarsWin.setText("Los numeros ganadores son: " + numerosGanadores.toString() + "\nLas estrellas ganadoras son: " + estrellasGanadoras.toString());
 
         int aciertosNumeros = contarAciertos(numerosSeleccionados, numerosGanadores);
         int aciertosEstrellas = contarAciertos(estrellasSeleccionadas, estrellasGanadoras);
