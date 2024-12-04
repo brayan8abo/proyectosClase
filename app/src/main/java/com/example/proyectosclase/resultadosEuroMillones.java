@@ -64,16 +64,20 @@ public class resultadosEuroMillones extends AppCompatActivity {
         TextView ganancias = findViewById(R.id.ganancias);
 
 
-        //contar las veces de juego
+        //contar las veces de juego usando la clase donde implementamos un SharedPreferences
         contadorVecesJugadas ContadorVecesJugadas = null;
         int numeroJugadas = ContadorVecesJugadas.recuperarJuegos(this);
         ContadorVecesJugadas.incrementarJuegos(this);
         numJuegos.setText("Has jugado: " + numeroJugadas + " veces");
 
+
+        //calculamos las ganacias que va tener el usuario y le pasamos el bote, pasandole el porcentaje
         int porcentajeGanancias = calcularGanancias(aciertosNumeros, aciertosEstrellas);
         int premioDelBote = bote(porcentajeGanancias);
 
 
+
+        //hacemos un control de ganacias para hacer un pequeño cambio de color dependiendo de si hemos ganado o no
         if (porcentajeGanancias > 0) {
             ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaPositiva));
             ganancias.setText("Has ganado: " + String.valueOf(premioDelBote) + "€, Enhorabuena!");
@@ -87,7 +91,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //finalizamos la app
                 finishAffinity();
             }
         });
@@ -95,12 +99,13 @@ public class resultadosEuroMillones extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 contadorVecesJugadas.resetearJuegos(resultadosEuroMillones.this);
-
+                //setemaos el numero de juegos a 0 con el listener
                 numJuegos.setText("Has jugado: 0 veces");
 
                 Toast.makeText(resultadosEuroMillones.this, "Has reiniciado el juego", Toast.LENGTH_SHORT).show();
             }
         });
+        //hacemos un listener para el boton nuevo juego, que nos redirige a la pestaña de seleccion
         btnNuevoJuego.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +115,8 @@ public class resultadosEuroMillones extends AppCompatActivity {
         });
     }
 
+
+    //un metodo para generar los numeros aleatoriamente que nos da un numero entre el 1 y el 50 y seguido los vamos metiendo en nuestro array
     public static ArrayList<Integer> generacionNum() {
         ArrayList<Integer> numerosGanadores = new ArrayList<>();
         Random numerosRdn = new Random();
@@ -119,9 +126,12 @@ public class resultadosEuroMillones extends AppCompatActivity {
                 numerosGanadores.add(numeros);
             }
         }
+        //nos retorna los numeros ganadores
         return numerosGanadores;
     }
 
+
+    //metodo para generar las estrellas aleatoriamente de entre 1 y 12, y posteriormente las agrega al array
     public static ArrayList<Integer> generacionEstrellas() {
         ArrayList<Integer> estrellasGanadoras = new ArrayList<>();
         Random estrellasRdn = new Random();
@@ -131,9 +141,12 @@ public class resultadosEuroMillones extends AppCompatActivity {
                 estrellasGanadoras.add(estrellas);
             }
         }
+        //retornamos las estrellas ganadoras
         return estrellasGanadoras;
     }
 
+
+    //metodo para contar los aciertos que le pasamos los numeros selecionados y los numeros ganadores que fueron anteriormente generados aleatoriamente
     public static int contarAciertos(ArrayList<Integer> seleccion, ArrayList<Integer> ganadores) {
         int aciertos = 0;
         for (int num : seleccion) {
@@ -144,6 +157,8 @@ public class resultadosEuroMillones extends AppCompatActivity {
         return aciertos;
     }
 
+
+    //metodo para calcular las ganancias dadas como requisito por el profesor, teniendo en cuenta el numero de estrellas y numeros acertados
     public static int calcularGanancias(int numerosAcertados, int estrellasAcertadas) {
         if (numerosAcertados == 5 && estrellasAcertadas == 2) return 100;
         if (numerosAcertados == 5 && estrellasAcertadas == 1) return 95;
@@ -160,6 +175,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         return 0;
     }
 
+    //metodo para generar un bote, optamos por un bote aleatorio donde, que dependiendo el numero que salga mostramos el bote que le corresponde
     public static int bote(int porcentajeGanancias) {
         int bote = 15000000;
 

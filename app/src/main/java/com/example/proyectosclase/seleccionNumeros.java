@@ -26,7 +26,7 @@ public class seleccionNumeros extends AppCompatActivity {
     private ArrayList<Integer> estrellasSeleccionadas = new ArrayList<>();
 
     private void configurarGrid(GridLayout grid, int max, ArrayList<Integer> seleccionados, int limite, String numero, boolean isStar) {
-        // Lista de nombres de los números y las estrellas
+        //Array con los nombres de los botones que llevara el grid
         String[] numeros = {
                 "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez",
                 "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho",
@@ -37,16 +37,19 @@ public class seleccionNumeros extends AppCompatActivity {
                 "cuarenta_y_uno", "cuarenta_y_dos", "cuarenta_y_tres", "cuarenta_y_cuatro", "cuarenta_y_cinco",
                 "cuarenta_y_seis", "cuarenta_y_siete", "cuarenta_y_ocho", "cuarenta_y_nueve", "cincuenta"
         };
-
+        //array con los nombres de las estrellas que llevara el grid
         String[] estrellas = {
                 "estrella_uno", "estrella_dos", "estrella_tres", "estrella_cuatro", "estrella_cinco",
                 "estrella_seis", "estrella_siete", "estrella_ocho", "estrella_nueve", "estrella_diez",
                 "estrella_once", "estrella_doce"
         };
 
+
+        //aca lo que hacemos es que en un bucle recorremos el grid y lo llenamos con los botones
         for (int i = 1; i <= max; i++) {
             ImageButton btn = new ImageButton(this);
 
+            //hacemos un if ternario para comprobar si es estrella o numero, teniendo condicionales de tamaño para estrellas 12 y numeros 50
             String nombreTipo = isStar ? "estrella" : "numero";
             if (isStar) {
                 // para estrellas, usamos el array de estrellas
@@ -56,26 +59,30 @@ public class seleccionNumeros extends AppCompatActivity {
                     continue;
                 }
             } else {
-                // para números, usamos el array 'numeros'
+                // para números, usamos el array numeros
                 if (i <= 50) {
                     nombreTipo = numeros[i - 1];
                 } else {
-                    continue; // Si el índice está fuera de rango, lo omitimos
+                    //si llegamos a darle jugar y no tenemos ningun numero ni estrella seleccionada nos saltara el mensaje que debemos seleccionar
+                    continue;
                 }
             }
 
-            // Obtener el ID del recurso usando el nombre generado
+            // obtener el ID del recurso usando el nombre generado, pasandole como recurso la carpeta drawable donde estan todos las imagenes
             @SuppressLint("DiscouragedApi") int idImagenes = getResources().getIdentifier(nombreTipo, "drawable", getPackageName());
 
+            //a cada imagen le asignamos un ID
             if (idImagenes == 0) {
                 System.out.println("Error: Imagen no encontrada para " + nombreTipo);
                 continue; // Salta esta iteración si no se encuentra el recurso
             }
 
-            // configurar la imagen y el tag del botón
+            // configurar la imagen y el tag del botón, pasandole un ID generado previamente
             btn.setImageResource(idImagenes);
-            btn.setTag(i);
+            btn.setTag(i);//asignamos el tag con el numero que le corresponde
 
+
+            //asignamos un listener donde le pasamos el tag para hacer el uso del boton que deseemos, tambien haciendo control en que si es numero o estrella
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,8 +121,8 @@ public class seleccionNumeros extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccion);
 
-        GridLayout gridNumeros = findViewById(R.id.gridNumeros);
-        GridLayout gridEstrellas = findViewById(R.id.gridEstrellas);
+        gridNumeros = findViewById(R.id.gridNumeros);
+        gridEstrellas = findViewById(R.id.gridEstrellas);
 
         //le pasamos al grid, el array numeros, el array estrellas, los numeros y estrellas que a seleccionado, los limites, los (tipos de nombre) y un boolean donde determina si es estrella o numero
         configurarGrid(gridNumeros, 50, numerosSeleccionados, 5, "numero_", false);
