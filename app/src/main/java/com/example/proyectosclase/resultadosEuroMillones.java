@@ -175,9 +175,9 @@ public class resultadosEuroMillones extends AppCompatActivity {
         return 0;
     }
 
-    //metodo para generar un bote, optamos por un bote aleatorio donde, que dependiendo el numero que salga mostramos el bote que le corresponde
+    //metodo para generar un bote
     public static int bote(int porcentajeGanancias) {
-        int bote = 15000000;
+        int bote = 15000000; // bote de 15 millones por que no queremos pobres
 
         return bote * porcentajeGanancias / 100;
     }

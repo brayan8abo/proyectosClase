@@ -68,7 +68,7 @@ public class euroMillonRegistro extends AppCompatActivity {
                     startActivity(seleccion);
                     finish();
                 } else {
-                    //Toast para mostrar el mensaje de usuario o contraseña incorrecta
+                    //Toast para mostrar el mensaje de usuario o contraseña incorrecta, y asi mismo setear a limpio y tener que volver a ingresar datos
                     Toast.makeText(euroMillonRegistro.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                     user.setText("");
                     pass.setText("");
