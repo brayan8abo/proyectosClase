@@ -1,6 +1,7 @@
 package com.example.proyectosclase;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
 
 
     //declaramos las variables usadas en el xml
-    private Button btnSalir, btnReset;
+    private Button btnSalir, btnReset, btnNuevoJuego;
     private TextView seleccionNumStar, numStarsWin, numJuegos, aciertos;
 
 
@@ -32,6 +33,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         seleccionNumStar = findViewById(R.id.seleccionNumStar);
         aciertos = findViewById(R.id.aciertos);
         btnReset = findViewById(R.id.btnReset);
+        btnNuevoJuego = findViewById(R.id.btnNuevoJuego);
 
         //recogemos los numeros y estrellas seleccionados que la pasamos de la actividad anterior
         ArrayList<Integer> numerosSeleccionados = getIntent().getIntegerArrayListExtra("numerosSeleccionados");
@@ -58,7 +60,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
 
 
         //hacemos uno del metodo calcular ganancia
-        int ganacias = calcularPorcentajeGanancia(contarAciertos(numerosSeleccionados, numerosGanadores), contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
+        int ganacias = calcularGanancias(contarAciertos(numerosSeleccionados, numerosGanadores), contarAciertos(estrellasSeleccionadas, estrellasGanadoras));
         TextView ganancias = findViewById(R.id.ganancias);
 
 
@@ -68,8 +70,9 @@ public class resultadosEuroMillones extends AppCompatActivity {
         ContadorVecesJugadas.incrementarJuegos(this);
         numJuegos.setText("Has jugado: " + numeroJugadas + " veces");
 
-        int porcentajeGanancias = contarAciertos(numerosSeleccionados, numerosGanadores);
-        long premioDelBote = bote(porcentajeGanancias);
+        int porcentajeGanancias = calcularGanancias(aciertosNumeros, aciertosEstrellas);
+        int premioDelBote = bote(porcentajeGanancias);
+
 
         if (porcentajeGanancias > 0) {
             ganancias.setTextColor(ContextCompat.getColor(this, R.color.ganaciaPositiva));
@@ -98,13 +101,20 @@ public class resultadosEuroMillones extends AppCompatActivity {
                 Toast.makeText(resultadosEuroMillones.this, "Has reiniciado el juego", Toast.LENGTH_SHORT).show();
             }
         });
+        btnNuevoJuego.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(resultadosEuroMillones.this, seleccionNumeros.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static ArrayList<Integer> generacionNum() {
         ArrayList<Integer> numerosGanadores = new ArrayList<>();
         Random numerosRdn = new Random();
         while (numerosGanadores.size() < 5) {
-            int numeros = numerosRdn.nextInt(5) + 1;
+            int numeros = numerosRdn.nextInt(50) + 1;
             if (!numerosGanadores.contains(numeros)) {
                 numerosGanadores.add(numeros);
             }
@@ -116,7 +126,7 @@ public class resultadosEuroMillones extends AppCompatActivity {
         ArrayList<Integer> estrellasGanadoras = new ArrayList<>();
         Random estrellasRdn = new Random();
         while (estrellasGanadoras.size() < 2) {
-            int estrellas = estrellasRdn.nextInt(2) + 1;
+            int estrellas = estrellasRdn.nextInt(12) + 1;
             if (!estrellasGanadoras.contains(estrellas)) {
                 estrellasGanadoras.add(estrellas);
             }
@@ -134,75 +144,26 @@ public class resultadosEuroMillones extends AppCompatActivity {
         return aciertos;
     }
 
-
-    public static int calcularPorcentajeGanancia(int aciertosNumeros, int aciertosEstrellas) {
-        // Si aciertas los 5 números y las 2 estrellas
-        if (aciertosNumeros == 5 && aciertosEstrellas == 2) {
-            return 100; // 100% si aciertas 5 números y 2 estrellas
-        }
-
-        // Si aciertas 5 números y 1 estrella
-        if (aciertosNumeros == 5 && aciertosEstrellas == 1) {
-            return 90; // 90% si aciertas 5 números y 1 estrella
-        }
-
-        // Si aciertas 5 números y 0 estrellas
-        if (aciertosNumeros == 5 && aciertosEstrellas == 0) {
-            return 80; // 80% si aciertas 5 números y 0 estrellas
-        }
-
-        // Si aciertas 4 números y 2 estrellas
-        if (aciertosNumeros == 4 && aciertosEstrellas == 2) {
-            return 75; // 75% si aciertas 4 números y 2 estrellas
-        }
-
-        // Si aciertas 4 números y 1 estrella
-        if (aciertosNumeros == 4 && aciertosEstrellas == 1) {
-            return 60; // 60% si aciertas 4 números y 1 estrella
-        }
-
-        // Si aciertas 3 números y 2 estrellas
-        if (aciertosNumeros == 3 && aciertosEstrellas == 2) {
-            return 50; // 50% si aciertas 3 números y 2 estrellas
-        }
-
-        // Si aciertas 4 números y 0 estrellas
-        if (aciertosNumeros == 4 && aciertosEstrellas == 0) {
-            return 40; // 40% si aciertas 4 números y 0 estrellas
-        }
-
-        // Si aciertas 2 números y 2 estrellas
-        if (aciertosNumeros == 2 && aciertosEstrellas == 2) {
-            return 30; // 30% si aciertas 2 números y 2 estrellas
-        }
-
-        // Si aciertas 3 números y 1 estrella
-        if (aciertosNumeros == 3 && aciertosEstrellas == 1) {
-            return 20; // 20% si aciertas 3 números y 1 estrella
-        }
-
-        // Si aciertas 3 números y 0 estrellas
-        if (aciertosNumeros == 3 && aciertosEstrellas == 0) {
-            return 10; // 10% si aciertas 3 números y 0 estrellas
-        }
-
-        // Si aciertas 1 número y 2 estrellas
-        if (aciertosNumeros == 1 && aciertosEstrellas == 2) {
-            return 5; // 5% si aciertas 1 número y 2 estrellas
-        }
-
-        // Si aciertas 2 números y 1 estrella
-        if (aciertosNumeros == 2 && aciertosEstrellas == 1) {
-            return 3; // 3% si aciertas 2 números y 1 estrella
-        }
-
-        // Si no aciertas ninguna de las combinaciones anteriores
-        return 0; // 0% en cualquier otro caso
+    public static int calcularGanancias(int numerosAcertados, int estrellasAcertadas) {
+        if (numerosAcertados == 5 && estrellasAcertadas == 2) return 100;
+        if (numerosAcertados == 5 && estrellasAcertadas == 1) return 95;
+        if (numerosAcertados == 5 && estrellasAcertadas == 0) return 80;
+        if (numerosAcertados == 4 && estrellasAcertadas == 2) return 75;
+        if (numerosAcertados == 4 && estrellasAcertadas == 1) return 60;
+        if (numerosAcertados == 3 && estrellasAcertadas == 2) return 50;
+        if (numerosAcertados == 4 && estrellasAcertadas == 0) return 40;
+        if (numerosAcertados == 2 && estrellasAcertadas == 2) return 30;
+        if (numerosAcertados == 3 && estrellasAcertadas == 1) return 20;
+        if (numerosAcertados == 3 && estrellasAcertadas == 0) return 10;
+        if (numerosAcertados == 1 && estrellasAcertadas == 2) return 5;
+        if (numerosAcertados == 2 && estrellasAcertadas == 1) return 3;
+        return 0;
     }
 
-    public static long bote(int porcentaje) {
-        long bote = 15000000L;
-        return (long) (15000000 * (100 / 100.0));
+    public static int bote(int porcentajeGanancias) {
+        int bote = 15000000;
+
+        return bote * porcentajeGanancias / 100;
     }
 
 }
